@@ -34,10 +34,10 @@ class page:
         return item.render(path)
 
     def get_item(self, itemname):
-        ia_item = ia.get_item(itemname)
-        if not ia_item.exists:
+        item = Item.find(itemname)
+        if not item:
             raise web.notfound("")
-        item = Item(ia_item)
+
         iadata = item.read_archive_yml()
         if iadata and iadata.get("itemtype") == "website":
             root = iadata.get("root") or f"{itemname}.zip"
@@ -57,12 +57,21 @@ class ZipItem:
         full_path = self.zip_path + "/" + path
         return self.item.read_file(full_path)
 
+CACHE = {}
+UNDEFINED = object()
+
 class Item:
     def __init__(self, item: ia.Item):
         self.item = item
         self.files =  [f['name'] for f in item.files]
+        self._yamldata = UNDEFINED
 
-    def read_archive_yml(self, item: Item):
+    def read_archive_yml(self):
+        if self._yamldata is UNDEFINED:
+            self._yamldata = self._read_archive_yml()
+        return self._yamldata
+
+    def _read_archive_yml(self):
         if "archive.yml" not in self.files:
             return
         contents = self.read_file("archive.yml").decode('utf-8')
@@ -95,3 +104,14 @@ class Item:
         file = self.item.get_file(filename)
         response = file.download(return_responses=True)
         return response.content
+
+    @classmethod
+    def find(cls, itemname):
+        if itemname not in CACHE:
+            CACHE[itemname] = cls._find(itemname)
+        return CACHE[itemname]
+
+    @classmethod
+    def _find(cls, itemname):
+        ia_item = ia.get_item(itemname)
+        return ia_item and cls(ia_item)
