@@ -4,6 +4,7 @@ import internetarchive as ia
 from jinja2 import Environment, PackageLoader
 import io
 import yaml
+import mimetypes
 
 urls = (
     "/(.*)", "page"
@@ -55,7 +56,19 @@ class ZipItem:
         # file.zip/a/b.txt
         path = path or "index.html"
         full_path = self.zip_path + "/" + path
+        content_type = self.guess_content_type(path)
+        web.header("Content-type", content_type)
         return self.item.read_file(full_path)
+
+    def guess_content_type(self, path):
+        content_type, charset = mimetypes.guess_type(path)
+        if content_type is None:
+            content_type = "text/html"
+        if content_type.startswith("text/"):
+            charset = charset or "utf-8"
+            content_type += "; charset=" + charset
+
+        return content_type
 
 CACHE = {}
 UNDEFINED = object()
