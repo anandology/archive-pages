@@ -97,7 +97,7 @@ class Item:
     def render_index(self):
         return render_template(
             "index.html",
-            title=self.item.metadata['title'],
+            title=self.item.metadata.get('title', ''),
             files=self.item.files)
 
     def read_file(self, filename) -> bytes:
