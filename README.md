@@ -1,26 +1,21 @@
-# onarchive
+# Archive Pages
 
-Onarchive is a tool to serve an archive.org item into a website.
+Websites for your archives, served directly from your archive.org item.
 
 ## How it works
 
-If you have an archive.org item `foobar`, you can see it at `foobar.onarchive.org`.
+Step 1: Add an archive.org item
 
-By default, it renders the website based on the type of the item, but it can be customized by writing an `archive.yml` file.
+Step 2: Upload the archive of your website as a zip file
 
-## Hosting a website
+Step 3: Add an `archive.yml` file mentioning the zip file path
 
-One of the most common use cases of onarchive is to host an archive of a website. To do that, create a zipfile of the website and add it to the item.
-
-For example, if name of the item is mygovwebsite2020, add a zipfile mygovwebsite2020.zip with all the contents of the archive.
-
-Add an archive.yml file to the item with the following contents:
+Here is an example of `archive.yml` file:
 
 ```
 version: 1
 itemtype: website
-root: mygovwebsite2020.zip
+root: archive.zip
 ```
 
-Once that is done, the website will be available at <https://mygovwebsite2020.onarchive.org>
-
+Your archive pages will be available at `https://<itemname>.onarchive.org/`

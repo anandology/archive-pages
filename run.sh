@@ -1,3 +1,3 @@
 #! /bin/bash
 
-gunicorn onarchive.webapp:application
+gunicorn archive_pages.webapp:application
