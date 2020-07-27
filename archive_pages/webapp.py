@@ -57,8 +57,14 @@ class ZipItem:
         path = path or "index.html"
         full_path = self.zip_path + "/" + path
         content_type = self.guess_content_type(path)
+        if self.is_binary(content_type):
+            raise web.redirect(self.item.get_download_url(full_path))
         web.header("Content-type", content_type)
         return self.item.read_file(full_path)
+
+    def is_binary(self, content_type):
+        binary_types = ["application", "image"]
+        return any(content_type.startswith(t) for t in binary_types)
 
     def guess_content_type(self, path):
         content_type, charset = mimetypes.guess_type(path)
@@ -89,6 +95,9 @@ class Item:
             return
         contents = self.read_file("archive.yml").decode('utf-8')
         return yaml.safe_load(io.StringIO(contents))
+
+    def get_download_url(self, path):
+        return self.item.urls.download + "/" + path
 
     def get_zipitem(self, path):
         return ZipItem(self, path)
