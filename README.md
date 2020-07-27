@@ -24,7 +24,7 @@ Your archive pages will be available at `https://<itemname>.onarchive.org/`
 
 An archive of [Aaron Swartz's website](www.aaronsw.com) on hosted using Archive Pages.
 
-<https://aaronsw-archive.onarchive.org/>
+<http://aaronsw-archive.onarchive.org/>
 
 See the item on archive.org:
 <https://archive.org/details/aaronsw-archive>
