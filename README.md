@@ -32,9 +32,7 @@ See the item on archive.org:
 ## How to run
 
 ```
-$ go build
-
-$ ./archive-pages
+$ docker-compose up -d 
 ```
 
 Visit http://aaronsw-archive.local.onarchive.org:8080/
