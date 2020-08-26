@@ -33,6 +33,18 @@ func handleRequest(w http.ResponseWriter, domain string, path string) {
 	proxy.ServeHTTP(w, req)
 }
 
+func guessContentType(path string) string {
+	ext := filepath.Ext(path)
+	if ext == "" {
+		return "text/html"
+	}
+	contentType := mime.TypeByExtension(ext)
+	if contentType == "" {
+		contentType = "application/octet-stream"
+	}
+	return contentType
+}
+
 func PagesReverseProxy(item *Item) *httputil.ReverseProxy {
 	director := func(req *http.Request) {
 		path := req.URL.Path
@@ -62,11 +74,7 @@ func PagesReverseProxy(item *Item) *httputil.ReverseProxy {
 		delete(res.Header, "Content-Disposition")
 
 		// Set the content-type using the extension of the requested resource
-		ext := filepath.Ext(res.Request.URL.Query().Get("file"))
-		contentType := mime.TypeByExtension(ext)
-		if contentType == "" {
-			contentType = "application/octet-stream"
-		}
+		contentType := guessContentType(res.Request.URL.Query().Get("file"))
 		res.Header.Set("Content-Type", contentType)
 		return nil
 	}

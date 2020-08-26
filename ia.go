@@ -44,6 +44,14 @@ type ItemFile struct {
 }
 
 func GetItem(identifier string) (*Item, error) {
+	var item *Item
+	item = GetCacheItem(identifier)
+	if item != nil {
+		log.Printf("CACHE HIT: %s\n", identifier)
+		return item, nil
+	}
+	log.Printf("CACHE MISS: %s\n", identifier)
+
 	metadata, err := GetItemMetadata(identifier)
 	if err != nil {
 		return nil, err
@@ -55,7 +63,7 @@ func GetItem(identifier string) (*Item, error) {
 		return nil, err
 	}
 
-	item := Item{
+	item = &Item{
 		Identifier:  identifier,
 		LastUpdated: metadata.LastUpdated,
 		Root:        root,
@@ -63,7 +71,8 @@ func GetItem(identifier string) (*Item, error) {
 		D2:          metadata.D2,
 		Dir:         metadata.Dir,
 	}
-	return &item, nil
+	SetCacheItem(identifier, item)
+	return item, nil
 }
 
 func getArchivePagesRoot(metadata ItemMetadata) (string, error) {
