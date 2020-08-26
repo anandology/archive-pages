@@ -76,6 +76,7 @@ func PagesReverseProxy(item *Item) *httputil.ReverseProxy {
 		// Set the content-type using the extension of the requested resource
 		contentType := guessContentType(res.Request.URL.Query().Get("file"))
 		res.Header.Set("Content-Type", contentType)
+		res.Header.Set("Cache-Control", "public; max-age=300")
 		return nil
 	}
 
