@@ -28,3 +28,13 @@ An archive of [Aaron Swartz's website](www.aaronsw.com) on hosted using Archive 
 
 See the item on archive.org:
 <https://archive.org/details/aaronsw-archive>
+
+## How to run
+
+```
+$ go build
+
+$ ./archive-pages
+```
+
+Visit http://aaronsw-archive.local.onarchive.org:8080/
