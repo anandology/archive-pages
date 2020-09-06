@@ -102,5 +102,6 @@ func Serve() {
 		handleRequest(w, getSubdomain(r.Host), r.URL.Path)
 	})
 
+	fmt.Println("http://localhost:8080/")
 	http.ListenAndServe(":8080", nil)
 }

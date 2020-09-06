@@ -6,19 +6,11 @@ Websites for your archives, served directly from your archive.org item.
 
 Step 1: Add an archive.org item
 
-Step 2: Upload the archive of your website as a zip file
+Step 2: Create a zip file of your website as a zip file with name archive-pages.zip
 
-Step 3: Add an `archive.yml` file mentioning the zip file path
+Step 3: Upload archive-pages.zip to your archive.org
 
-Here is an example of `archive.yml` file:
-
-```
-version: 1
-itemtype: website
-root: archive.zip
-```
-
-Your archive pages will be available at `https://<itemname>.onarchive.org/`
+Your archive pages website will be live at `https://<itemname>.onarchive.org/`
 
 ## Example
 

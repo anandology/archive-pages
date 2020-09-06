@@ -56,11 +56,18 @@ func GetItem(identifier string) (*Item, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Println(metadata)
 
-	root, err := getArchivePagesRoot(*metadata)
-	if err != nil {
-		return nil, err
+	var root string
+
+	if hasArchivePagesZip(metadata) {
+		root = "archive-pages.zip"
+	} else {
+		// Find the zip file to use from archive.yml
+		// Kept only for backward-compability, will be removed in future versions
+		root, err = getArchivePagesRoot(metadata)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	item = &Item{
@@ -75,7 +82,16 @@ func GetItem(identifier string) (*Item, error) {
 	return item, nil
 }
 
-func getArchivePagesRoot(metadata ItemMetadata) (string, error) {
+func hasArchivePagesZip(metadata *ItemMetadata) bool {
+	for _, f := range metadata.Files {
+		if f.Name == "archive-pages.zip" {
+			return true
+		}
+	}
+	return false
+}
+
+func getArchivePagesRoot(metadata *ItemMetadata) (string, error) {
 
 	url := fmt.Sprintf("https://%s%s/archive.yml", metadata.D1, metadata.Dir)
 	log.Println(url)
