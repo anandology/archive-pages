@@ -17,7 +17,7 @@ $ echo "<h1>Hello World!</h1>" > index.html
 Zip the entite website and call it archive-pages.zip
 
 ```
-$ zip archive-pages.zip index.html
+$ zip -r archive-pages.zip index.html
 ```
 
 ### Step 3 -- Add the zip file to your archive.org item
@@ -25,7 +25,7 @@ $ zip archive-pages.zip index.html
 You can use the [The Internet Archive Python Library][1] to upload.
 
 ```
-$ ia upload archive-pages.zip my-item
+$ ia upload my-item archive-pages.zip
 ```
 
 [1]:https://archive.org/services/docs/api/internetarchive/cli.html
