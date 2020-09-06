@@ -1,0 +1,25 @@
+site_name: Archive Pages
+site_url: http://onarchive.org/
+site_author: Anand Chitipothu
+
+# Repository
+repo_name: anandology/archive-pages
+repo_url: https://github.com/anandology/archive-pages
+edit_uri: ""
+
+theme:
+  name: material
+  features:
+    - tabs
+  palette:
+    scheme: default
+    primary: indigo
+    accent: indigo
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+nav:
+  - Home: index.md
