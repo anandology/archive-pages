@@ -93,6 +93,9 @@ func getItem(domain string) (int, error) {
 
 func getSubdomain(host string) string {
 	host = strings.Split(host, ":")[0] // strip port
+	if host == "onarchive.org" || host == "local.onarchive.org" {
+		return "archive-pages"
+	}
 	return strings.Split(host, ".")[0]
 }
 
