@@ -28,3 +28,7 @@ $ docker-compose up -d
 ```
 
 Visit http://aaronsw-archive.local.onarchive.org:8080/
+
+## License
+
+Archive Pages is licensed under MIT License. Please see the LICENSE file for more details.
